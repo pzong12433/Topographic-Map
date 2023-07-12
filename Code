@@ -1,0 +1,41 @@
+function [topo,dist] = Proj3(alt,water)
+[xdim,ydim] = size(alt);
+topo = zeros(xdim,ydim,3,"uint8");
+minarray = min(alt);
+x1=0;
+x2 =0;
+y1 = 0;
+y2 = 0;
+maxarray = max(alt);
+for i = 1:1:xdim
+    for j = 1:1:ydim
+        if water(i,j) == 1
+            topo(i,j,:) = [0,0,255];%blue
+        elseif alt(i,j) == min(minarray)
+            x1 = i;
+            y1 = j;
+            topo(i,j,:) = [128,0,255];%purple
+        elseif alt(i,j) == max(maxarray)
+            x2 = i;
+            y2 = j;
+            topo(i,j,:) = [255,0,255];%Magenta
+        elseif alt(i,j) > 4500
+            topo(i,j,:) = [0,255,255];%cyan
+        elseif alt(i,j) > 4000
+            topo(i,j,:) = [255,255,255];%white
+        elseif alt(i,j) > 3000
+            topo(i,j,:) = [255,0,0];%Red
+        elseif alt(i,j) > 2000
+            topo(i,j,:) = [255,128,0];%orange
+        elseif alt(i,j) > 1000
+            topo(i,j,:) = [255,255,0];%yellow
+        elseif alt(i,j) >= 0
+            topo(i,j,:) = [0,255,0];%green
+        elseif alt(i,j) < 0
+            topo(i,j,:) = [0,0,0];%black 
+        end
+    end
+end
+
+dist = sqrt(((x210)-(x110))^2+((y210)-(y110))^2);
+image(topo)
